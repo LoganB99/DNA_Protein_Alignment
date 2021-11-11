@@ -29,8 +29,8 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
         for j in range(1, len(prot_seq)+1):
             seq1_fill_options = [ 
                     seq1_fill[i-1][j-1]+ get_score(seq1[i-1],prot_seq[j-1],scoring_table), #0
-                    insert_x[i-1][j-1] + get_score(seq1[i-1],prot_seq[j-1],scoring_table), #1
-                    insert_y[i-1][j-1] + get_score(seq1[i-1],prot_seq[j-1],scoring_table), #2
+                    insert_x[i-1][j-1], #1
+                    insert_y[i-1][j-1], #2
                     0]
 
             seq1_fill[i][j] = max(seq1_fill_options)
@@ -46,14 +46,14 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
             elif (ptr == 2): 
                 seq1_ptr[i][j] = "Y"
             #Gap open, gap extension
-            insert_x_options = [seq1_fill[i-1][j] - go, insert_x[i-1][j] - ge]
+            insert_x_options = [seq1_fill[i-1][j] - (go), insert_x[i-1][j] - ge]
             insert_x[i][j] = max(insert_x_options)
             ptr = insert_x_options.index(max(insert_x_options))
             if (ptr == 0):
                 x_ptr[i][j] = "S"
             else:
                 x_ptr[i][j] = "X"
-            insert_y_options = [seq1_fill[i][j-1] - go, insert_y[i][j-1] - ge]
+            insert_y_options = [seq1_fill[i][j-1] - (go), insert_y[i][j-1] - ge]
             insert_y[i][j] = max(insert_y_options)
             ptr = insert_y_options.index(max(insert_y_options))
             if (ptr == 0):
