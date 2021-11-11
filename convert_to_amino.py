@@ -4,6 +4,7 @@ def convert_to_amino(seq, codons):
     #convert to codons (make the codon.txt into a structure
     #return the sequences
     # code the local alignment
+    # book says to use Gotoh algorithm for affine - three matrices
     #figure out traceback
     #what to do with stop codons? use . in blosum
 
