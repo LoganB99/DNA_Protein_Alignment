@@ -73,7 +73,7 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
             curr_i -=1
             curr_j -=1
         elif goto == "X":
-            y_align = seq1[curr_j-1] + y_align
+            x_align = seq1[curr_i-1] + x_align
             y_align = "-" + y_align
             goto = x_ptr[curr_i-1][curr_j]
             curr_i -=1
