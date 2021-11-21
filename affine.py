@@ -34,16 +34,22 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
            #         0]
             seq1_fill_options = [
                 seq1_fill[i - 1][j - 1],  # 0
-                insert_x[i - 1][j - 1],  # 1
-                insert_y[i - 1][j - 1],  # 2
+                insert_x[i - 1][j-1],  # 1
+                insert_y[i-1][j - 1],  # 2
                 0]
-            seq1_fill[i][j] = get_score(seq[i-1], prot_seq[j-1], scoring_table) + max(seq1_fill_options)
+            if(i == 6 and j == 4):
+                print(seq1[i-1], prot_seq[j-1])
+                print(get_score(seq1[i-1],prot_seq[j-1], scoring_table))
+                print(seq1_fill_options)
+            seq1_fill[i][j] = get_score(seq1[i-1], prot_seq[j-1], scoring_table) + max(seq1_fill_options)
+            #seq1_fill[i][j] += max(seq1_fill_options)
             seq1_fill[i][j] = max(seq1_fill[i][j], 0)
             if (seq1_fill[i][j] > max_score):
                 max_score = seq1_fill[i][j]
                 max_i = i
                 max_j = j
             ptr = seq1_fill_options.index(max(seq1_fill_options))
+            print("pointer is ", ptr)
             if (ptr == 0): # Comes from a match/mismatch
                 seq1_ptr[i][j]="S"
             elif (ptr == 1): 
@@ -67,30 +73,34 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
                 y_ptr[i][j] = "Y"
     curr_i = max_i
     curr_j = max_j
+    print(curr_i, curr_j)
     print(seq1_fill)
     print(max_score)
-    x_align = seq1[curr_i - 1] #maybe switch
-    y_align = prot_seq[curr_j - 1]
+    #y_align = seq1[curr_i - 1] #maybe switch
+    #x_align = prot_seq[curr_j - 1]
     goto = seq1_ptr[curr_i][curr_j]
+    count=0
+
     while(seq1_fill[curr_i][curr_j]!=0):
+        print(goto)
         if goto == "S":
             curr_i -=1
             curr_j -=1
-            y_align = prot_seq[curr_j-1] + y_align
-            x_align = seq1[curr_i-1] + x_align
+            x_align = prot_seq[curr_j] + x_align
+            y_align = seq1[curr_i] + y_align
             goto = seq1_ptr[curr_i][curr_j]
-            
         elif goto == "X":
             #maybe switch
             curr_i -=1
-            x_align = seq1[curr_i-1] + x_align
-            y_align = "-" + y_align
+            y_align = seq1[curr_i] + y_align
+            x_align = "-" + x_align
             goto = x_ptr[curr_i][curr_j]
         elif goto == "Y":
             curr_j -= 1
-            x_align = "-" + x_align
-            y_align = prot_seq[curr_j-1] + y_align
+            y_align = "-" + y_align
+            x_align = prot_seq[curr_j] + x_align
             goto = y_ptr[curr_i][curr_j]
+        count += 1
             
 
     print(y_align)
