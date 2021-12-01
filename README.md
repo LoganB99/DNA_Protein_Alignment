@@ -1,5 +1,7 @@
 # DNA_Protein_Alignment
 
+# # Explanation of my approach
+
 Input: DNA Sequence and protein Sequence
 
 This program converts the DNA sequence into three forward reading frames and aligns them to the protein sequence using local alignment and blosum62 matrix. 
