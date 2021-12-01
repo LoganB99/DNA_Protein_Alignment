@@ -1,15 +1,14 @@
 # DNA_Protein_Alignment
 
+# Explanation of my approach
+This program first converts the DNA sequence into three forward reading frames. I accomplished this by reading dna.fasta file and taking codons of three bases and converting them to their corresponding amino acids with a data structure created with the help of codon.txt. It has three starting points, hence the three forward reading frames.
+
+I create the scoring matrix using a Blosum62 scoring table, allowing for stop codons and unknown purines and pyrimidines. I then pass the reading frames into my alignment algorithm.
+
+My goal was to use the Smith Waterman algorithm with the Gotoh modification to allow for affine gaps. I created an S matrix (for match/mismatch), an X matrix, and a Y matrix (for horizontal and vertical affine gaps). Because this is localized, everything in the fill matrix is minimized at zero. For each letter in the reading frames and the protein sequences, I then use dynamic programming to produce the optimal alignment. I check to see if the current index has increased any of the sequence's lengths. If so, it is heavily penalized so that a frame shift can not be set to that sequence. If the current tracked sequence is diferent then the 
+
 Input: DNA Sequence and protein Sequence
 
-This program converts the DNA sequence into three forward reading frames and aligns them to the protein sequence using local alignment and blosum62 matrix. 
-Affine gaps within frames are allowed, and eventually gaps between frames will also be allowed.
 
-Right now the program is just attempting to align the first reading frame to the protein sequence, so a string is hardcoded for the DNA sequence
-(But the logic for converting to the reading frames is finished)
-
-protein.fasta contains the protein sequence, dna.fasta contains the DNA sequence (when not hardcoding)
-
-affine.py has the Fill and Traceback code. Right now, one fill matrix and three pointer matrices are being used to try and align one reading frame to the protein sequence. A max score is calculated and a traceback is attempted. However, gaps are incorrect as it can end on a gap, and long sequences are not aligned properly.
 
 The syntax of the affine alignment is smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, frame_pen)
