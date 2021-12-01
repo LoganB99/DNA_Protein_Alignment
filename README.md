@@ -7,7 +7,10 @@ I create the scoring matrix using a Blosum62 scoring table, allowing for stop co
 
 My goal was to use the Smith Waterman algorithm with the Gotoh modification to allow for affine gaps. I created an S matrix (for match/mismatch), an X matrix, and a Y matrix (for horizontal and vertical affine gaps). Because this is localized, everything in the fill matrix is minimized at zero. For each letter in the reading frames and the protein sequences, I then use dynamic programming to produce the optimal alignment. I check to see if the current index has increased any of the sequence's lengths. If so, it is heavily penalized so that a frame shift can not be set to that sequence. If the current tracked sequence is diferent then the 
 
-Input: DNA Sequence and protein Sequence
+#Instructions
+
+Input: DNA Sequence and protein Sequence in FASTA format
+* Make sure the bases and amino acids are in capital letters.
 
 
 
