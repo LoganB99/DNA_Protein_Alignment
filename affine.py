@@ -10,17 +10,6 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
     seq1_ptr = [["" for c in range(len(prot_seq)+1)] 
             for r in range(len(seq1)+1)]
     
-    seq2_fill = [[0 for c in range(len(prot_seq)+1)] 
-            for r in range(len(seq2)+1)]
-    #direction matrix for fill matrix
-    seq2_ptr = [["" for c in range(len(prot_seq)+1)] 
-            for r in range(len(seq2)+1)]
-    
-    seq3_fill = [[0 for c in range(len(prot_seq)+1)] 
-            for r in range(len(seq3)+1)]
-    #direction matrix for fill matrix
-    seq3_ptr = [["" for c in range(len(prot_seq)+1)] 
-            for r in range(len(seq3)+1)]
     #affine gap horizontally
     insert_x = [[float("-inf") for c in range(len(prot_seq)+1)] 
             for r in range(max(len(seq1),len(seq2),len(seq3))+1)]
@@ -44,19 +33,6 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
     for i in range(1, max(len(seq1),len(seq2),len(seq3))+1):
         for j in range(1, len(prot_seq)+1):
             curr_seq_start = curr_seq
-            print(seq1[i-1])
-           # seq1_fill_options = [ 
-           #         seq1_fill[i-1][j-1]+ get_score(seq1[i-1],prot_seq[j-1],scoring_table), #0
-           #         insert_x[i-1][j-1], #1
-           #         insert_y[i-1][j-1], #2
-           #         0]
-           # seq1_fill_options = [
-           #     seq1_fill[i - 1][j - 1],  # 0
-           #     insert_x[i - 1][j-1],  # 1
-           #     insert_y[i-1][j - 1],  # 2
-           #     0]
-           #TODO figure out frameshift 
-           #if
             seq1_fill_options = [
                 seq1_fill[i - 1][j - 1],  # 0
                 insert_x[i - 1][j-1],  # 1
@@ -84,7 +60,7 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
                     seq3_score]
             fs_penalty = 0
             # figure out when to add frame_shift_options
-            if(curr_seq != frame_shift_options.index(max(frame_shift_options))):
+            if(frame_shift_options[curr_seq] < (frame_shift_options[frame_shift_options.index(max(frame_shift_options))] - frame_pen)):
                 #Frame shift is penalized
                 fs_penalty = -1*frame_pen
                 curr_seq = frame_shift_options.index(max(frame_shift_options))
@@ -123,7 +99,6 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
     #x_align = prot_seq[curr_j]
     goto = seq1_ptr[curr_i][curr_j]
     count=0
-    print(max_score)
     while(seq1_fill[curr_i][curr_j]!=0):
         if goto == 0 or goto == 1 or goto == 2:
             curr_i -=1
@@ -158,7 +133,7 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
             goto = y_ptr[curr_i][curr_j]
         count += 1
             
-
+    print(max_score)
     print(y_align)
     print(x_align)
     return seq1_fill, insert_x, insert_y

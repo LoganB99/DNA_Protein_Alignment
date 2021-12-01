@@ -50,8 +50,6 @@ for line in prot_file:
         seq = line.strip()
         prot_seq += seq
     count += 1
-print(codon_dict)
 reading_frames = convert_to_amino(dna_seq, codon_dict)
-print(reading_frames)
-smith_waterman_gotoh(reading_frames[0],reading_frames[1], reading_frames[2], prot_seq, table, 1, 1, 5)
+smith_waterman_gotoh(reading_frames[0],reading_frames[1], reading_frames[2], prot_seq, table, 1, 1, 1)
 
