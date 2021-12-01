@@ -26,7 +26,7 @@ codon_dict = dict()
 for line in codons:
     cols = line.split("\t")
     if (cols[2] == "O"):
-        cols[2] == "."
+        cols[2] = "."
     codon_dict[cols[0]] = cols[2]
 #Read DNA and Protein Fafsas
 count = 0
@@ -50,7 +50,8 @@ for line in prot_file:
         seq = line.strip()
         prot_seq += seq
     count += 1
-
+print(codon_dict)
 reading_frames = convert_to_amino(dna_seq, codon_dict)
-smith_waterman_gotoh("PAHLAE",reading_frames[1], reading_frames[2], prot_seq, table, 1, 1, 5)
+print(reading_frames)
+smith_waterman_gotoh(reading_frames[0],reading_frames[1], reading_frames[2], prot_seq, table, 1, 1, 5)
 
