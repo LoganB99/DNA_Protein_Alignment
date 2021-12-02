@@ -18,9 +18,11 @@ The syntax of the affine alignment is smith_waterman_gotoh(seq1, seq2, seq3, pro
 3. Run `python3 align.py dna.fasta protein.fasta`
 
 # What doesn't work
-Unfortunately, there are some traceback issues. The correct score is calculated, but it swaps the gaps with the letters for some reason.
-For example, my program returned
+Unfortunately, there are some traceback issues. The correct score is calculated, but it swaps the gaps with the letters for some reason. For example, my program returned
+
 YLILAL--V
+
 YLIL-GALV
+
 with the correct score, but the "AL" and the "--" should be swapped in the top sequence.
 
