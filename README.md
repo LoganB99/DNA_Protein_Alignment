@@ -26,3 +26,64 @@ YLIL-GALV
 
 with the correct score, but the "AL" and the "--" should be swapped in the top sequence.
 
+# Examples
+You can run this with any DNA and Protein sequence you like, but here are some examples of the different results you could get
+
+1. Perfect Match
+
+
+Input DNA: ATACTTAATCTAGGCATTAGTGC Input Protein: ILNLGIS
+
+Result:
+
+Max score is 27
+
+ALIGNMENT
+
+Translated:  ILNLGIS
+
+   Protein:  ILNLGIS
+   
+       DNA:  ATACTTAATCTAGGCATTAGT
+       
+2. Modifying the Protein to do a frame shift
+
+Input DNA: ATACTTAATCTAGGCATTAGTGC  Input Protein: ILNLALV
+
+Max score is 24
+
+ALIGNMENT
+
+Translated:  ILNLALV
+
+   Protein:  ILNLALV
+   
+       DNA:  ATACTTAATCTAGCATTAGTG
+       
+ 3. Introducing a Gap (Partially incorrect)
+
+Max score is 21
+
+ALIGNMENT
+
+Translated:  ILN-L-GL
+
+   Protein:  ILNLYRGI
+   
+       DNA:  ATACTTAATCTAGGCTTAAGT
+       
+
+Translated:  S
+
+   Protein:  S
+   
+       DNA:  
+       
+ One of the gaps should swap with the L. 
+ 
+ 
+# Thank you for this fun project, I hope you enjoy my work!
+
+
+
+
