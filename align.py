@@ -51,5 +51,5 @@ for line in prot_file:
         prot_seq += seq
     count += 1
 reading_frames = convert_to_amino(dna_seq, codon_dict)
-smith_waterman_gotoh(reading_frames[0],reading_frames[1], reading_frames[2], prot_seq, table, 1, 1, 1)
+smith_waterman_gotoh(reading_frames[0],reading_frames[1], reading_frames[2], prot_seq, dna_seq, table, 1, 1, 1)
 

@@ -1,7 +1,7 @@
 from get_score import *
 
 #DP algorithm to fill matrices
-def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, frame_pen):
+def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, dna_seq, scoring_table, go, ge, frame_pen):
     #Main fill matrix for sequence 1
     #how do i do frame shift?
     seq1_fill = [[0 for c in range(len(prot_seq)+1)] 
@@ -99,6 +99,7 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
     #x_align = prot_seq[curr_j]
     goto = seq1_ptr[curr_i][curr_j]
     count=0
+    dna_seq_final = ""
     while(seq1_fill[curr_i][curr_j]!=0):
         if goto == 0 or goto == 1 or goto == 2:
             curr_i -=1
@@ -107,22 +108,28 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
             if goto == 0:
                 curr_seq = 0
                 y_align = seq1[curr_i] + y_align
+                dna_seq_final = dna_seq[curr_i*3:3+curr_i*3] + dna_seq_final
             elif goto == 1:
                 curr_seq = 1
                 y_align = seq2[curr_i] + y_align
+                dna_seq_final = dna_seq[1+curr_i*3:4+curr_i*3] + dna_seq_final
             else:
                 curr_seq = 2
                 y_align = seq3[curr_i] + y_align
+                dna_seq_final = dna_seq[2+curr_i*3:5+curr_i*3] + dna_seq_final
             goto = seq1_ptr[curr_i][curr_j]
         elif goto == "X":
             #maybe switch
             curr_i -=1
             if curr_seq == 0:
                 y_align = seq1[curr_i] + y_align
+                dna_seq_final = dna_seq[curr_i*3:3+curr_i*3] + dna_seq_final
             elif curr_seq == 1:
                 y_align = seq2[curr_i] + y_align
+                dna_seq_final = dna_seq[1+curr_i*3:4+curr_i*3] + dna_seq_final
             else:
                 y_align = seq3[curr_i] + y_align
+                dna_seq_final = dna_seq[2+curr_i*3:5+curr_i*3] + dna_seq_final
 
             x_align = "-" + x_align
             goto = x_ptr[curr_i][curr_j]
@@ -133,9 +140,19 @@ def smith_waterman_gotoh(seq1, seq2, seq3, prot_seq, scoring_table, go, ge, fram
             goto = y_ptr[curr_i][curr_j]
         count += 1
             
-    print(max_score)
-    print(y_align)
-    print(x_align)
+    print("Max score is", max_score)
+
+    print("ALIGNMENT")
+    index = 0
+    while (index < len(y_align)-8):
+        print("Translated: ", y_align[index:index+8])
+        print("   Protein: ", x_align[index:index+8])
+        print("       DNA: ", dna_seq_final[3*index:3*(index+8)])
+        index += 8
+        print()
+    print("Translated: ", y_align[index:])
+    print("   Protein: ", x_align[index:])
+    print("       DNA: ", dna_seq_final[3*index:])
     return seq1_fill, insert_x, insert_y
 
 
